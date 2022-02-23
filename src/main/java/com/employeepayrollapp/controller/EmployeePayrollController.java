@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -17,11 +16,10 @@ import java.util.List;
 @RequestMapping("/employeePayroll")
 @Slf4j
 /**
-Causes lombok to generate a logger field. ... This annotation is valid for classes and enumerations.
-In Java, Logging is an API that provides the ability to trace out the errors of the applications.
-The SLF4J or the Simple Logging Facade for Java is an abstraction layer for various Java logging frameworks,
-like Log4j 2 or Logback. This allows for plugging different logging frameworks at deployment time without the need for code changes.
-
+*Causes lombok to generate a logger field. ... This annotation is valid for classes and enumerations.
+*In Java, Logging is an API that provides the ability to trace out the errors of the applications.
+*The SLF4J or the Simple Logging Facade for Java is an abstraction layer for various Java logging frameworks,
+*like Log4j 2 or Logback. This allows for plugging different logging frameworks at deployment time without the need for code changes.
  */
 public class EmployeePayrollController {
     @Autowired
@@ -63,7 +61,6 @@ public class EmployeePayrollController {
 
     @PostMapping(path = "/create")
     public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrollDTO empPayrollDTO) {
-        log.debug("Employee DTO"+empPayrollDTO.toString());
         EmployeePayrollData employeePayrollData = employeePayrollService.createEmployeePayrollData(empPayrollDTO);
         ResponseDTO respDTO = new ResponseDTO("Created Employee Data ", employeePayrollData);
         return new ResponseEntity<ResponseDTO> (respDTO, HttpStatus.OK);
@@ -107,4 +104,5 @@ public class EmployeePayrollController {
 
 
 
+//        log.debug("Employee DTO"+empPayrollDTO.toString());
 

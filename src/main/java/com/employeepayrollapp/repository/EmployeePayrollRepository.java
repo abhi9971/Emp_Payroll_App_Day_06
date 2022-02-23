@@ -5,11 +5,15 @@ package com.employeepayrollapp.repository;
 
 
 import com.employeepayrollapp.model.EmployeePayrollData;
-import org.springframework.data.repository.CrudRepository;
-
-public interface EmployeePayrollRepository extends CrudRepository<EmployeePayrollData, Integer> {}
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
+public interface EmployeePayrollRepository extends JpaRepository<EmployeePayrollData, Integer> {}
+
+/**
+ * here EmployeePayrollRepository we take all data of our entity which is EmployeePayrollData, and passes id as integer which is our
+ * primary key of our model class i.e Employee Payroll data.
+ */
 
 
 

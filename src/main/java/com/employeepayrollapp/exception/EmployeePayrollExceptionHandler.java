@@ -24,29 +24,20 @@ public class EmployeePayrollExceptionHandler {
 
     private static final String MESSAGE = "Exception while processing REST Request";
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ResponseDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception){
-        log.error("Invalid Date format", exception);
-        ResponseDTO respDTO = new ResponseDTO(MESSAGE,"Should have date in the format dd MM yyy");
-        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ResponseDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
+    public ResponseEntity<ResponseDTO> handlerMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+
         List<ObjectError> errorList = exception.getBindingResult().getAllErrors();
-        List<String> errMsg = errorList.stream().map(objErr -> objErr.getDefaultMessage()).collect(Collectors.toList());
-        ResponseDTO respDTO = new ResponseDTO(MESSAGE, errMsg);
-        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.BAD_REQUEST);
+        List<String> errMesg = errorList.stream().map(objErr -> objErr.getDefaultMessage()).collect(Collectors.toList());
+
+        ResponseDTO responseDTO = new ResponseDTO("Exception while processing REST requests", errMesg);
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
+
     }
 
     @ExceptionHandler(EmployeePayrollException.class)
-    public ResponseEntity<ResponseDTO> handleEmployeePayrollException(EmployeePayrollException exception){
-        ResponseDTO respDTO = new ResponseDTO(MESSAGE, exception.getMessage());
-        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.BAD_REQUEST);
-    }
-    @ExceptionHandler(ChangeSetPersister.NotFoundException.class)
-    public ResponseEntity<ResponseDTO> handleEmployeePayrollNotFoundException(ChangeSetPersister.NotFoundException exception){
-        ResponseDTO responseDTO = new ResponseDTO(MESSAGE, exception.getMessage());
-        return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ResponseDTO> handleEmployeeNotFound(EmployeePayrollException exception) {
+        ResponseDTO response = new ResponseDTO("Invalid id input", exception.getMessage());
+        return new ResponseEntity<ResponseDTO>(response, HttpStatus.BAD_REQUEST);
     }
 }
